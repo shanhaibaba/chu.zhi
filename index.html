@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>渊源 MOD - 官方网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* 暗黑模式 */
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        /* 顶部标题栏 */
+        .header {
+            padding: 20px;
+            background-color: #fff;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .header {
+            background-color: #1e1e1e;
+        }
+        .header-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .header-subtitle {
+            font-size: 14px;
+            color: #666;
+            transition: color 0.3s;
+        }
+        .dark-mode .header-subtitle {
+            color: #aaa;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 25px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* 模块容器 */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .card-desc {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+        .dark-mode .card-desc {
+            color: #aaa;
+        }
+
+        /* 购买密匙按钮 */
+        .buy-key-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #ff3333;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* 注意事项模块 */
+        .notice-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .notice-btn {
+            padding: 12px;
+            background-color: #f5f5f5;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: left;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .dark-mode .notice-btn {
+            background-color: #2a2a2a;
+            border-color: #333;
+            color: #e0e0e0;
+        }
+        .notice-btn:hover {
+            background-color: #eee;
+        }
+        .dark-mode .notice-btn:hover {
+            background-color: #333;
+        }
+
+        /* 作弊下载模块 */
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .download-btn {
+            padding: 12px;
+            background-color: #f5f5f5;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+            cursor: pointer;
+            color: #333;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+        }
+        .dark-mode .download-btn {
+            background-color: #2a2a2a;
+            border-color: #333;
+            color: #e0e0e0;
+        }
+        .download-btn:hover {
+            background-color: #eee;
+        }
+        .dark-mode .download-btn:hover {
+            background-color: #333;
+        }
+
+        /* 下载说明 */
+        .download-note {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #666;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode .download-note {
+            background-color: #2a2a2a;
+            color: #aaa;
+        }
+        .download-note p {
+            margin-bottom: 5px;
+        }
+        .copyright {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            transition: color 0.3s;
+        }
+        .dark-mode .copyright {
+            color: #777;
+        }
+
+        /* 子页面（其他问题/常见问题/检查更新） */
+        .sub-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f5f5f5;
+            z-index: 100;
+            padding: 20px;
+            overflow-y: auto;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .sub-page {
+            background-color: #121212;
+        }
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-top: 10px;
+        }
+        .sub-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .back-btn {
+            color: #007bff;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .sub-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .sub-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .dark-mode .sub-card {
+            background-color: #1e1e1e;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .sub-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .sub-card-desc {
+            font-size: 14px;
+            color: #666;
+            transition: color 0.3s;
+        }
+        .dark-mode .sub-card-desc {
+            color: #aaa;
+        }
+
+        /* 下滑展开动画 */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .sub-card.animate {
+            animation: slideDown 0.5s ease forwards;
+        }
+
+        /* 服务器下载弹窗 - 从下向上弹出动画 */
+        .download-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 200;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        .modal-content {
+            background-color: #fff;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            transition: background-color 0.3s;
+            transform: translateY(100%);
+            animation: slideUp 0.4s ease forwards;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideDownClose {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+        }
+        .dark-mode .modal-content {
+            background-color: #1e1e1e;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .modal-body {
+            text-align: center;
+        }
+        /* 游戏客户端图标 */
+        .modal-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #007bff;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background-color: #e6f2ff;
+            border-radius: 12px;
+            line-height: 60px;
+            transition: background-color 0.3s;
+        }
+        .dark-mode .modal-icon {
+            background-color: #2a4365;
+        }
+        .modal-file-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .modal-file-size {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        .dark-mode .modal-file-size {
+            color: #aaa;
+        }
+        .modal-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            transition: color 0.3s;
+        }
+        .dark-mode .modal-desc {
+            color: #aaa;
+        }
+        .confirm-download-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">渊源 MOD</div>
+        <div class="header-subtitle">官方频道 @VRTX_WD</div>
+        <button class="theme-toggle" onclick="toggleTheme()">
+            <span id="theme-icon">🌙</span>
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- 密匙购买模块 -->
+        <div class="card">
+            <div class="card-title">密匙购买</div>
+            <div class="card-desc">除法定节假日和周六日外，其他时间收费</div>
+            <!-- 已添加购买密钥链接 -->
+            <button class="buy-key-btn" onclick="window.open('https://new.818fka.com/shop/CZNB_666', '_blank')">💸 购买密匙</button>
+        </div>
+
+        <!-- 注意事项模块 -->
+        <div class="card">
+            <div class="card-title">注意事项</div>
+            <div class="card-desc">能解决您的80%问题</div>
+            <div class="notice-buttons">
+                <button class="notice-btn" onclick="openSubPage('common-questions')">ℹ️ 常见问题</button>
+                <button class="notice-btn" onclick="openSubPage('other-questions')">💬 其他问题</button>
+                <!-- 已添加检查更新的点击事件 -->
+                <button class="notice-btn" onclick="openSubPage('check-update')">🔄 检查更新</button>
+                <button class="notice-btn" onclick="openSubPage('about-us')">ℹ️ 关于我们</button>
+            </div>
+        </div>
+
+        <!-- 作弊下载模块 -->
+        <div class="card">
+            <div class="card-title">作弊下载</div>
+            <div class="card-desc">选择您要下载的游戏服务器版本</div>
+            <div class="download-buttons">
+                <button class="download-btn" onclick="openDownloadModal('全球服')">全球服下载</button>
+                <button class="download-btn" onclick="openDownloadModal('日韩服')">日韩服下载</button>
+                <button class="download-btn" onclick="openDownloadModal('台湾服')">台湾服下载</button>
+                <button class="download-btn" onclick="openDownloadModal('越南服')">越南服下载</button>
+            </div>
+            <div class="download-note">
+                <p>下载说明</p>
+                <p>• 所有版本均为最新版</p>
+                <p>• 稳定奔放，进过严格测试</p>
+                <p>• 流畅运行，独家调试</p>
+            </div>
+            <div class="copyright">
+                ©2025渊源 MOD | 官方频道@VRTX_WD 下载就代表同意用具协议
+            </div>
+        </div>
+    </div>
+
+    <!-- 其他问题子页面 -->
+    <div id="other-questions" class="sub-page">
+        <div class="sub-header">
+            <button class="back-btn" onclick="closeSubPage()">← 返回</button>
+            <div class="sub-title">其他问题</div>
+            <div></div>
+        </div>
+        <div class="sub-content">
+            <div class="sub-card">
+                <div class="sub-card-title">联系我们</div>
+                <div class="sub-card-desc">如果您在使用过程中遇到任何问题，可以通过以下方式联系我们：</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">在线客服</div>
+                <div class="sub-card-desc">工作时间：全天24H<br>联系方式：官方Telegram频道 @CZyuan_bot</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">问题反馈</div>
+                <div class="sub-card-desc">您也可以通过问题反馈功能提交您遇到的问题，我们会在24小时内回复。</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">常见问题</div>
+                <div class="sub-card-desc">在联系官方客服前，建议您先查看常见问题页面，可能已经有您需要的答案。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 常见问题子页面 -->
+    <div id="common-questions" class="sub-page">
+        <div class="sub-header">
+            <button class="back-btn" onclick="closeSubPage()">← 返回</button>
+            <div class="sub-title">常见问题</div>
+            <div></div>
+        </div>
+        <div class="sub-content">
+            <div class="sub-card">
+                <div class="sub-card-title">如何安装模组？</div>
+                <div class="sub-card-desc">下载对应版本的安装包和OBB后，将OBB导入游戏中。通常需要将OBB放入游戏的文件夹中。</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">模组是否安全？</div>
+                <div class="sub-card-desc">所有模组都经过严格的安全检测，确保可以流畅稳定运行。我们建议只从官方渠道下载。</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">为什么我的模组无法安装？</div>
+                <div class="sub-card-desc">部分手机会出现报毒或其他情况，将无线数据和WLAN关闭再进行安装。</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">如何获取帮助？</div>
+                <div class="sub-card-desc">如果您遇到问题，可以通过其他功能联系我们，我们会尽快为您解决问题。</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">模组是否免费？</div>
+                <div class="sub-card-desc">除法定节假日和每周周六周末，其他时间我们会进行低收费。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 检查更新子页面 -->
+    <div id="check-update" class="sub-page">
+        <div class="sub-header">
+            <button class="back-btn" onclick="closeSubPage()">← 返回</button>
+            <div class="sub-title">检查更新</div>
+            <div></div>
+        </div>
+        <div class="sub-content">
+            <div class="sub-card">
+                <div class="sub-card-title">当前版本</div>
+                <div class="sub-card-desc">渊源 MOD v3.2.1（2025-11-20）</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">最新版本</div>
+                <div class="sub-card-desc">已检测到最新版本：v3.2.1（当前已是最新版本）</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">更新内容</div>
+                <div class="sub-card-desc">• 修复了部分服务器连接不稳定的问题<br>• 优化了模组运行流畅度<br>• 新增越南服专属功能适配<br>• 修复了已知BUG</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">更新提示</div>
+                <div class="sub-card-desc">如果检测到新版本，您可以直接在本页面点击“立即更新”按钮获取最新版本。建议保持模组为最新状态以获得更好体验。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 关于我们子页面 -->
+    <div id="about-us" class="sub-page">
+        <div class="sub-header">
+            <button class="back-btn" onclick="closeSubPage()">← 返回</button>
+            <div class="sub-title">关于我们</div>
+            <div></div>
+        </div>
+        <div class="sub-content">
+            <div class="sub-card">
+                <div class="sub-card-title">团队介绍</div>
+                <div class="sub-card-desc">渊源 MOD 团队成立于2023年，专注于游戏辅助工具的开发与优化，致力于为玩家提供稳定、安全的游戏体验。</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">官方频道</div>
+                <div class="sub-card-desc">@CZyuan_bot（频道反馈）<br>Telegram：@VRTX_WD</div>
+            </div>
+            <div class="sub-card">
+                <div class="sub-card-title">密匙说明</div>
+                <div class="sub-card-desc">除法定节假日和周六日外，其他时间密匙购买将收取低额费用，感谢您的支持。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 服务器下载弹窗 -->
+    <div id="download-modal" class="download-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="closeDownloadModal()">← 返回</button>
+                <div class="modal-title" id="modal-server-title">全球服下载</div>
+                <div></div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-icon">🎮</div>
+                <div class="modal-file-title" id="modal-file-title">全球服游戏客户端</div>
+                <div class="modal-file-size" id="modal-file-size">文件大小: 1.2 GB</div>
+                <div class="modal-desc" id="modal-desc">全球服务器版本，可以与世界各地的玩家一起游戏。包含最新游戏内容和优化。</div>
+                <button class="confirm-download-btn" onclick="openDownloadLink()">确认下载</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 切换暗黑模式
+        function toggleTheme() {
+            const body = document.body;
+            const themeIcon = document.getElementById('theme-icon');
+            
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.textContent = '☀️';
+            } else {
+                themeIcon.textContent = '🌙';
+            }
+        }
+
+        // 检查系统主题偏好
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode');
+            document.getElementById('theme-icon').textContent = '☀️';
+        }
+
+        // 打开子页面
+        function openSubPage(pageId) {
+            const subPage = document.getElementById(pageId);
+            subPage.style.display = 'block';
+            
+            // 为子卡片添加动画
+            const subCards = subPage.querySelectorAll('.sub-card');
+            subCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.classList.add('animate');
+                }, index * 100);
+            });
+        }
+
+        // 关闭子页面
+        function closeSubPage() {
+            const subPages = document.querySelectorAll('.sub-page');
+            subPages.forEach(page => {
+                page.style.display = 'none';
+                // 重置动画
+                const subCards = page.querySelectorAll('.sub-card');
+                subCards.forEach(card => {
+                    card.classList.remove('animate');
+                });
+            });
+        }
+
+        // 打开服务器下载弹窗
+        function openDownloadModal(serverType) {
+            const modal = document.getElementById('download-modal');
+            const modalServerTitle = document.getElementById('modal-server-title');
+            const modalFileTitle = document.getElementById('modal-file-title');
+            const modalFileSize = document.getElementById('modal-file-size');
+            const modalDesc = document.getElementById('modal-desc');
+
+            // 根据服务器类型设置内容
+            switch(serverType) {
+                case '全球服':
+                    modalServerTitle.textContent = '全球服下载';
+                    modalFileTitle.textContent = '全球服游戏客户端';
+                    modalFileSize.textContent = '文件大小: 1.2 GB';
+                    modalDesc.textContent = '全球服务器版本，可以与世界各地的玩家一起游戏。包含最新游戏内容和优化。';
+                    break;
+                case '日韩服':
+                    modalServerTitle.textContent = '日韩服下载';
+                    modalFileTitle.textContent = '日韩服游戏客户端';
+                    modalFileSize.textContent = '文件大小: 1.1 GB';
+                    modalDesc.textContent = '日韩服务器版本，适配日韩地区网络环境，包含地区专属内容。';
+                    break;
+                case '台湾服':
+                    modalServerTitle.textContent = '台湾服下载';
+                    modalFileTitle.textContent = '台湾服游戏客户端';
+                    modalFileSize.textContent = '文件大小: 1.0 GB';
+                    modalDesc.textContent = '台湾服务器版本，适配台湾地区网络环境，支持繁体中文。';
+                    break;
+                case '越南服':
+                    modalServerTitle.textContent = '越南服下载';
+                    modalFileTitle.textContent = '越南服游戏客户端';
+                    modalFileSize.textContent = '文件大小: 0.9 GB';
+                    modalDesc.textContent = '越南服务器版本，适配越南地区网络环境，支持越南语。';
+                    break;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        // 关闭服务器下载弹窗（动画：从上方弹回底部）
+        function closeDownloadModal() {
+            const modal = document.getElementById('download-modal');
+            const modalContent = modal.querySelector('.modal-content');
+            // 添加关闭动画
+            modalContent.style.animation = 'slideDownClose 0.4s ease forwards';
+            // 动画结束后隐藏弹窗
+            setTimeout(() => {
+                modal.style.display = 'none';
+                // 重置动画，以便下次打开时正常播放
+                modalContent.style.animation = 'slideUp 0.4s ease forwards';
+            }, 400);
+        }
+
+        // 打开下载链接
+        function openDownloadLink() {
+            const currentServer = document.getElementById('modal-server-title').textContent;
+            let downloadLink = '';
+            
+            switch(currentServer) {
+                case '全球服下载':
+                    downloadLink = 'https://www.123865.com/s/uINJjv-5kSRh'; 
+                    break;
+                case '日韩服下载':
+                    downloadLink = 'https://www.123684.com/s/uINJjv-qkSRh'; 
+                    break;
+                case '台湾服下载':
+                    downloadLink = 'https://www.123865.com/s/uINJjv-ykSRh'; 
+                    break;
+                case '越南服下载':
+                    downloadLink = 'https://www.123684.com/s/uINJjv-6kSRh'; 
+                    break;
+            }
+            window.open(downloadLink, '_blank');
+        }
+    </script>
+</body>
+</html>
